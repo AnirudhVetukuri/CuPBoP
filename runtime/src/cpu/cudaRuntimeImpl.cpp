@@ -171,11 +171,6 @@ const char *cudaGetErrorString(cudaError_t error) {
 
 // cuBlas functionality
 
-cublasStatus_t cublasCreate_v2(cublasHandle_t *handle) {
-
-    return CUBLAS_STATUS_SUCCESS;
-}
-
 cublasStatus_t cublasSgeam(cublasHandle_t handle,
                            cublasOperation_t transa, cublasOperation_t transb,
                            int m, int n,
