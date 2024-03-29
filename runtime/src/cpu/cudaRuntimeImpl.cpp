@@ -169,6 +169,45 @@ const char *cudaGetErrorString(cudaError_t error) {
   }
 }
 
+// cuBlas functionality
+
+cublasStatus_t cublasCreate_v2(cublasHandle_t *handle) {
+
+    return CUBLAS_STATUS_SUCCESS;
+}
+
+cublasStatus_t cublasSgeam(cublasHandle_t handle,
+                           cublasOperation_t transa, cublasOperation_t transb,
+                           int m, int n,
+                           const float *alpha, const float *A, int lda,
+                           const float *beta, const float *B, int ldb,
+                           float *C, int ldc) {
+    if (transa != CUBLAS_OP_N || transb != CUBLAS_OP_N) {
+        // Return an error if unsupported.
+        return CUBLAS_STATUS_NOT_SUPPORTED;
+    }
+
+    // MKL equivalent for matrix addition: C = alpha*A + beta*B
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+            int idx = i * ldc + j;
+            C[idx] = (*alpha) * A[i * lda + j] + (*beta) * B[i * ldb + j];
+        }
+    }
+
+    return CUBLAS_STATUS_SUCCESS;
+}
+
+cublasStatus_t cublasDestroy_v2(cublasHandle_t handle) {
+
+    return CUBLAS_STATUS_SUCCESS;
+}
+
+cublasStatus_t cublasCreate_v2(cublasHandle_t *handle) {
+
+    return CUBLAS_STATUS_SUCCESS;
+}
+
 cudaError_t cudaGetLastError(void) { return lastError; }
 
 static callParams callParamTemp;
